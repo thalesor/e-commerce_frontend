@@ -34,7 +34,6 @@ export default function App() {
     })
   }
    
-
   const displayMessage = (type, title, text, fn=null, showCancelButton=false) =>
   {
    message.fire({

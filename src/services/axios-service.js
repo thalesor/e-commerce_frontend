@@ -7,6 +7,13 @@ async function postBook(data)
     return requisitionObj;
 }
 
+async function getCategories() 
+{
+    const requisitionObj = await axios.get("http://localhost:5000/categories");
+    return requisitionObj;
+}
+
 export {
-    postBook
+    postBook,
+    getCategories
 }

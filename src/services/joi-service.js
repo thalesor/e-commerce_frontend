@@ -1,7 +1,5 @@
 import Joi from 'joi';
-import pkg from 'joi-translation-pt-br';
-
-const {messages} = pkg;
+import {messages} from 'joi-translation-pt-br';
 
 const bookSchema = Joi.object({
   title: Joi.string().trim().min(5).required().label("Título"),

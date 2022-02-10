@@ -1,52 +1,81 @@
 import React, { useState } from 'react';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppContainer } from '../Pages/ShareComponents';
-import BookRegister from '../Pages/BookRegister/Index';
+import { AppContainer } from '././Pages/ShareComponents';
+import BookRegister from '././Pages/BookRegister/Index';
+import Context from "./contexts/AppContext";
+import Swal from 'sweetalert2';
 
 function App() {
   
   const [userData, setUserData] = useState(localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : null);
-  const [isVisibleMessage, setIsVisibleMessage] = useState(false);
-  const initialMessageState = 
-  {
-    showCancel : false,
-    message: '',
-    type: 'error',
-    confirmBtnText: '',
-    cancelBtnText: '',
-    fn: null,
-    messageTitle: ''
-  };
-  const [messageData, setMessageData] = useState(initialMessageState);
-
-  const message = (message, type='success', title=title, fn=null) =>
-  {
-    const messageConfig = 
-    {
-        message: message,
-        type: type,
-        confirmBtnText: 'OK',
-        title: title,
-        fn: fn
-    };
-    displayMessage(messageConfig);
-}
 
 
-  const displayMessage = (messageConfig) =>
+  const message = Swal.mixin({
+    buttonsStyling: true
+  });
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
+
+  const displayToast = (type, title) =>
   {
-    setMessageData(messageConfig);
-    setIsVisibleMessage(true);
+    Toast.fire({
+      icon: type,
+      title: title
+    })
   }
+   
 
+  const displayMessage = (type, title, text, fn=null, showCancelButton=false) =>
+  {
+   message.fire({
+      title: title,
+      text: text,
+      icon: type,
+      showCancelButton: showCancelButton,
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'Não',
+      reverseButtons: true
+    });
+    
+    if(fn)
+    {
+      message.then((result) => {
+        if (result.isConfirmed) {
+          message.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } else if (result.dismiss === Swal.DismissReason.cancel ) {
+          message.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      });
+    }
+   
+  }
+ 
+  /*
   const hideMessage = () => 
   {
     setIsVisibleMessage(false);
     setMessageData(initialMessageState);
   }
 
-  /*
+  
   async function logout(token)
   {
     try {
@@ -64,33 +93,17 @@ function App() {
 
   return (
     <AppContainer>
-      <UserContext.Provider value={{userData, setUserData, hideMessage, displayMessage, logout, formatMoney, message}}>
+      <Context.Provider value={{userData, setUserData, displayMessage, displayToast}}>
     <BrowserRouter>
       <Routes>
       <Route path="/book-register" element={
       <BookRegister />
       }></Route> 
       </Routes>
-      { isVisibleMessage && 
-        <SweetAlert
-            type={messageData.type}
-            showCancel={messageData.showCancel}
-            confirmBtnText= {messageData.confirmBtnText ? messageData.confirmBtnText : "Ok"}
-            cancelBtnText= {messageData.cancelBtnText}
-            title={messageData.title}
-            onConfirm={()=> {
-              if(messageData.fn)
-              messageData.fn()
-              else
-              hideMessage();
-            }}
-            onCancel={()=> hideMessage()}
-            >
-            {messageData.message}
-        </SweetAlert>
-        }
     </BrowserRouter>
-    </UserContext.Provider>
+    </Context.Provider>
     </AppContainer>
   );
 }
+
+export default App;

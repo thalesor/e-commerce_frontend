@@ -1,104 +1,85 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageCadastro from "./Pages/PageCadastro/cadastro-index";
-// import SweetAlert from "react-bootstrap-sweetalert";
-// import { AppContainer } from "../Pages/ShareComponents";
-// import BookRegister from "../Pages/BookRegister/Index";
+import { AppContainer } from '././Pages/ShareComponents';
+import BookRegister from '././Pages/BookRegister/Index';
+import Context from "./contexts/AppContext";
+import Swal from 'sweetalert2';
 
 export default function App() {
-	// const [userData, setUserData] = useState(
-	// 	localStorage.getItem("userData")
-	// 		? JSON.parse(localStorage.getItem("userData"))
-	// 		: null
-	// );
-	// const [isVisibleMessage, setIsVisibleMessage] = useState(false);
-	// const initialMessageState = {
-	// 	showCancel: false,
-	// 	message: "",
-	// 	type: "error",
-	// 	confirmBtnText: "",
-	// 	cancelBtnText: "",
-	// 	fn: null,
-	// 	messageTitle: "",
-	// };
-	// const [messageData, setMessageData] = useState(initialMessageState);
+	const [userData, setUserData] = useState(localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : null);
 
-	// const message = (message, type = "success", title = title, fn = null) => {
-	// 	const messageConfig = {
-	// 		message: message,
-	// 		type: type,
-	// 		confirmBtnText: "OK",
-	// 		title: title,
-	// 		fn: fn,
-	// 	};
-	// 	displayMessage(messageConfig);
-	// };
 
-	// const displayMessage = (messageConfig) => {
-	// 	setMessageData(messageConfig);
-	// 	setIsVisibleMessage(true);
-	// };
+  const message = Swal.mixin({
+    buttonsStyling: true
+  });
 
-	// const hideMessage = () => {
-	// 	setIsVisibleMessage(false);
-	// 	setMessageData(initialMessageState);
-	// };
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
 
-	/*
-  async function logout(token)
+  const displayToast = (type, title) =>
   {
-    try {
-      await deleteSession(token);
-      localStorage.clear();
-      setUserData(null);
-      window.location.replace("/");
-    }
-    catch(err)
-    {
-      message(err.response.data, 'error', 'Erro ao logar!');
-    }
+    Toast.fire({
+      icon: type,
+      title: title
+    })
   }
-  */
+   
 
-	return (
-		// <AppContainer>
-		// 	<UserContext.Provider
-		// 		value={{
-		// 			userData,
-		// 			setUserData,
-		// 			hideMessage,
-		// 			displayMessage,
-		// 			logout,
-		// 			formatMoney,
-		// 			message,
-		// 		}}
-		// 	>
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<PageCadastro />} />
-				{/* <Route path="/book-register" element={<BookRegister />}></Route> */}
-			</Routes>
-			{/* {isVisibleMessage && (
-						<SweetAlert
-							type={messageData.type}
-							showCancel={messageData.showCancel}
-							confirmBtnText={
-								messageData.confirmBtnText ? messageData.confirmBtnText : "Ok"
-							}
-							cancelBtnText={messageData.cancelBtnText}
-							title={messageData.title}
-							onConfirm={() => {
-								if (messageData.fn) messageData.fn();
-								else hideMessage();
-							}}
-							onCancel={() => hideMessage()}
-						>
-							{messageData.message}
-						</SweetAlert>
-					)}
-				</BrowserRouter>
-			</UserContext.Provider>
-		</AppContainer> */}
-		</BrowserRouter>
-	);
+  const displayMessage = (type, title, text, fn=null, showCancelButton=false) =>
+  {
+   message.fire({
+      title: title,
+      text: text,
+      icon: type,
+      showCancelButton: showCancelButton,
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'Não',
+      reverseButtons: true
+    });
+    
+    if(fn)
+    {
+      message.then((result) => {
+        if (result.isConfirmed) {
+          message.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } else if (result.dismiss === Swal.DismissReason.cancel ) {
+          message.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      });
+    }
+   
+  }
+
+		return (
+			<AppContainer>
+			  <Context.Provider value={{userData, setUserData, displayMessage, displayToast}}>
+			<BrowserRouter>
+			  <Routes>
+			  <Route path="/" element={<PageCadastro />} />
+			  <Route path="/book-register" element={
+			  <BookRegister />
+			  }></Route> 
+			  </Routes>
+			</BrowserRouter>
+			</Context.Provider>
+			</AppContainer>
+		  );
 }

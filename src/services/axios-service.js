@@ -8,6 +8,13 @@ async function postBook(data) {
 	return requisitionObj;
 }
 
+
+async function getCategories() 
+{
+    const requisitionObj = await axios.get(`${Base_URL}/categories`);
+    return requisitionObj;
+}
+
 async function signUp(data) {
 	try {
 		const retorno = await axios.post(`${Base_URL}/signUp`, data);
@@ -18,4 +25,4 @@ async function signUp(data) {
 	}
 }
 
-export { postBook, signUp };
+export { postBook, signUp, getCategories };

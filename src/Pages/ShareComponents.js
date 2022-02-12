@@ -1,6 +1,5 @@
-import style from 'styled-components';
-import { Link } from 'react-router-dom';
-
+import style from "styled-components";
+import { Link } from "react-router-dom";
 
 const AppContainer = style.div`
     background-color: #ffffff;
@@ -33,10 +32,8 @@ const Input = style.input`
     width: 100%;
     padding-left: 20px;
     height: 60px;
-    background-color: ${(props) => props.disabled ?
-    "#F2F2F2" : "#FFFFFF"};
-    color: ${(props) => props.disabled &&
-    "#AFAFAF"};
+    background-color: ${(props) => (props.disabled ? "#F2F2F2" : "#FFFFFF")};
+    color: ${(props) => props.disabled && "#AFAFAF"};
     border: 1px solid #c5c5c5;
     border-radius: 2px;
     font-size: 20px;
@@ -51,10 +48,8 @@ const TextArea = style.textarea`
     width: 100%;
     padding-left: 20px;
     height: 120px;
-    background-color: ${(props) => props.disabled ?
-    "#F2F2F2" : "#FFFFFF"};
-    color: ${(props) => props.disabled &&
-    "#AFAFAF"};
+    background-color: ${(props) => (props.disabled ? "#F2F2F2" : "#FFFFFF")};
+    color: ${(props) => props.disabled && "#AFAFAF"};
     border: 1px solid #c5c5c5;
     border-radius: 2px;
     font-size: 20px;
@@ -70,7 +65,7 @@ const Label = style.label`
     font-size: 14px;
     font-weight: 500;
     color: #222;
-`
+`;
 
 const FormButton = style.button`
     display: inline-block;
@@ -97,7 +92,7 @@ const LinkTag = style(Link)`
     justify-content: center;
     color: #FFFFFF;
     font-weight: bold;
-`
+`;
 
 const Legend = style.h1`
     text-align: center;
@@ -115,16 +110,15 @@ const VerticalSeparator = style.div`
     height: ${(props) => props.amount}px;
 `;
 
-
 export {
-    Container,
-    AppContainer,
-    Legend,
-    Label,
-    TextArea,
-    Form,
-    Input,
-    FormButton,
-    LinkTag,
-    VerticalSeparator
-}
+	Container,
+	AppContainer,
+	Legend,
+	Label,
+	TextArea,
+	Form,
+	Input,
+	FormButton,
+	LinkTag,
+	VerticalSeparator,
+};

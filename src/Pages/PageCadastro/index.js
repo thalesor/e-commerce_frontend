@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ConteinerStyled, SectionStyled, FormStyled } from "./style";
+import {
+	ConteinerStyled,
+	SectionStyled,
+	FormStyled,
+} from "../../components/formComponents";
 import validationDadosCadastrados from "./validation";
 import { signUp } from "../../services/axios-service";
 

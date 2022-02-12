@@ -39,4 +39,15 @@ async function signUp(data) {
 	}
 }
 
-export { postBook, signUp, getCategories, getBook, getBooks };
+async function signIn(data) {
+	try {
+		const promesa = await axios.post(`${Base_URL}/signIn`, data);
+		const token = promesa.data;
+		return token;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
+}
+
+export { postBook, signUp, getCategories, getBook, getBooks, signIn };

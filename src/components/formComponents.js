@@ -22,6 +22,26 @@ export const SectionStyled = styled.section`
 		font-weight: 400;
 		margin-bottom: 16px;
 	}
+
+	hr {
+		border-top: medium solid #ccc;
+		margin: 40px 0;
+		height: 1px;
+		overflow: visible;
+		padding: 0;
+		color: #ccc;
+		text-align: center;
+
+		::after {
+			content: "or";
+			display: inline-block;
+			position: relative;
+			top: -0.9em;
+			font-size: 1.4em;
+			padding: 0 0.3em;
+			background: white;
+		}
+	}
 `;
 
 export const FormStyled = styled.form`

@@ -2,7 +2,8 @@ import React, { useState, useLayoutEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { getCategories, getBooks } from '../../services/axios-service';
-import {  Legend } from '../ShareComponents';
+import {  Legend, AppContainer } from '../ShareComponents';
+import Menu from "../Menu/Index";
 import { Row, BookBox, PriceTag} from './Style';
 
 const Store = () =>
@@ -34,6 +35,8 @@ const Store = () =>
 
 
     return <>
+    <Menu/>
+    <AppContainer>
         { categories ?
         (
             categories.map((cat) => 
@@ -69,6 +72,7 @@ const Store = () =>
         : 
         'Não há itens na loja'
         }
+    </AppContainer>
     </>
 }
 

@@ -8,9 +8,25 @@ async function postBook(data) {
 	return requisitionObj;
 }
 
-async function getCategories() {
-	const requisitionObj = await axios.get(`${Base_URL}/categories`);
+async function getBooks() {
+	const requisitionObj = await axios.get(`${Base_URL}/books`);
 	return requisitionObj;
+}
+
+async function getBook(title) {
+	const requisitionObj = await axios.get(`${Base_URL}/book`, {
+        headers: {
+            title: title
+          }
+    });
+	return requisitionObj;
+}
+
+
+async function getCategories() 
+{
+    const requisitionObj = await axios.get(`${Base_URL}/categories`);
+    return requisitionObj;
 }
 
 async function signUp(data) {
@@ -34,4 +50,4 @@ async function signIn(data) {
 	}
 }
 
-export { postBook, signUp, getCategories, signIn };
+export { postBook, signUp, getCategories, getBook, getBooks, signIn };

@@ -5,10 +5,8 @@ const AppContainer = style.div`
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: 30px;
-    justify-content: center;
-    align-items: center;
+    overflow-x: hidden;
 `;
 
 const Container = style.div`
@@ -79,7 +77,7 @@ const FormButton = style.button`
     color: #ffffff;
     z-index: 1;
     font-size: 12px;
-    background-color: #343a40;
+    background-color: #201f1f;
 `;
 
 const LinkTag = style(Link)`
@@ -96,13 +94,11 @@ const LinkTag = style(Link)`
 
 const Legend = style.h1`
     text-align: center;
-    display: block:
-    width: 100%;
     font-family: "Poppins", sans-serif;
     color: #201f1f;
     font-weight: 500;
     line-height: 1.2;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 `;
 
 const VerticalSeparator = style.div`

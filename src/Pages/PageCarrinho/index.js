@@ -1,34 +1,12 @@
+import React, { useState, useContext } from 'react';
 import styled from "styled-components";
-import Menu from "../menu";
+import Menu from "../Menu/Index";
+import Context from "../../contexts/AppContext";
 
 export default function PageCarrinho() {
-	const books = [
-		{
-			title: "Dracula",
-			category: "terror",
-			imageUrl:
-				"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSONYlW_s79OoJmFtW6AE9ArJBgp-hgYbk9_H6xoGDK-oxDvKIJdrL3Jrmt7T3NJaES81PqP2UD8cyFPxZnpsfd4h9yb1fhoLK8RtPtw0on&usqp=CAc",
-			description: "não brilha",
-			value: 40,
-		},
-		{
-			title: "Dracula",
-			category: "terror",
-			imageUrl:
-				"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSONYlW_s79OoJmFtW6AE9ArJBgp-hgYbk9_H6xoGDK-oxDvKIJdrL3Jrmt7T3NJaES81PqP2UD8cyFPxZnpsfd4h9yb1fhoLK8RtPtw0on&usqp=CAc",
-			description: "não brilha",
-			value: 40,
-		},
-		{
-			title: "Dracula",
-			category: "terror",
-			imageUrl:
-				"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSONYlW_s79OoJmFtW6AE9ArJBgp-hgYbk9_H6xoGDK-oxDvKIJdrL3Jrmt7T3NJaES81PqP2UD8cyFPxZnpsfd4h9yb1fhoLK8RtPtw0on&usqp=CAc",
-			description: "não brilha",
-			value: 40,
-		},
-	];
 
+	const { carrinho } = useContext(Context);
+	console.log(carrinho);
 	function Carrinho() {
 		return (
 			<Table>
@@ -41,10 +19,10 @@ export default function PageCarrinho() {
 					</tr>
 				</thead>
 				<tbody>
-					{books.map((b) => (
-						<tr key={b.id}>
+					{carrinho.map((b) => (
+						<tr key={b._id}>
 							<td>
-								<img src={b.imageUrl} alt="erro"></img>
+								<Img src={b.imageUrl} alt="erro"/>
 							</td>
 							<td>{b.title}</td>
 							<td>{b.description}</td>
@@ -56,10 +34,11 @@ export default function PageCarrinho() {
 		);
 	}
 
+	
 	function Total() {
 		let soma = 0;
-		for (let i = 0; i < books.length; i++) {
-			soma += books[i].value;
+		for (let i = 0; i < carrinho.length; i++) {
+			soma += carrinho[i].value;
 		}
 		return (
 			<TotalStyled>
@@ -68,6 +47,7 @@ export default function PageCarrinho() {
 			</TotalStyled>
 		);
 	}
+	
 
 	return (
 		<>
@@ -104,6 +84,11 @@ const Centralise = styled.main`
 		}
 	}
 `;
+
+const Img = styled.img`
+	width: 40px;
+	height: 80px;
+`
 
 const Table = styled.table`
 	width: 100%;

@@ -7,13 +7,14 @@ import {
 	FormStyled,
 } from "../../components/formComponents";
 import { useAuth } from "../../contexts/AppContext";
+import validationDadosLogin from "./validation";
 
 export default function PageLogin() {
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
-	const { setUserData } = useAuth();
+	const { manterLogin } = useAuth();
 
 	const navegate = useNavigate();
 
@@ -21,20 +22,22 @@ export default function PageLogin() {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	}
 
-	function manterLogin(Data) {
-		setUserData(Data);
-		localStorage.setItem("useData", JSON.stringify(Data));
-	}
-
 	async function hadlerSubmit(e) {
 		e.preventDefault();
 
 		const user = { ...formData };
 
+		const valid = validationDadosLogin(user);
+
+		if (!valid) {
+			alert("erro nos dados de cadastro");
+			return;
+		}
+
 		try {
 			const token = await signIn(user);
 			manterLogin(token);
-			navegate("/carrinho");
+			navegate("/");
 		} catch (error) {
 			console.log(error);
 			alert("Erro, tente novamente");

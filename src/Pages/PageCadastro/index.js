@@ -42,7 +42,7 @@ export default function PageCadastro() {
 			const promessa = await signUp(user);
 			console.log(promessa);
 			alert(`O usuário foi cadastrado 🥰`);
-			navegate("/");
+			navegate("/login");
 		} catch (error) {
 			console.log(error);
 			alert("Erro, tente novamente");

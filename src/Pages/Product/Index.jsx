@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useContext } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { getBook } from '../../services/axios-service';
 import {  Legend, FormButton } from '../ShareComponents';
@@ -11,6 +11,8 @@ const Product = () =>
     const { titulo_produto } = useParams();
     const [bookData, setBookData] = useState(null);
     const { addCarrinho } = useContext(Context);
+    const navegate = useNavigate();
+
     useLayoutEffect(() => {
     async function fetchData() 
     {
@@ -41,7 +43,10 @@ const Product = () =>
             <Price>R$ {bookData.value}</Price>
             <Span>{bookData.description}</Span>
             <Span>Em estoque: {bookData.in_stock}</Span>
-            <FormButton  onClick={()=> addCarrinho({...bookData})}>
+            <FormButton  onClick={()=> {
+                addCarrinho({...bookData})
+                navegate("/")
+            }}>
                 +Add. ao carrinho
             </FormButton>
         </>

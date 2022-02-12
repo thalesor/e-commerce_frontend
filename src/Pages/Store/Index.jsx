@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useLayoutEffect, useContext, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { getCategories, getBooks } from '../../services/axios-service';
 import {  Legend, AppContainer } from '../ShareComponents';
@@ -10,7 +10,15 @@ const Store = () =>
 {
     const [categories, setCategories] = useState(null);
     const [books, setBooks] = useState(null);
-    const { userData, displayMessage, displayToast } = useContext(Context);
+    const { token, deslogar, userData, displayMessage, displayToast } = useContext(Context);
+    const navegate = useNavigate();
+
+    useEffect(()=> {
+        if(!token || token.length===0){
+          deslogar();
+          navegate("/login")
+        }
+    },[token])
     
     useLayoutEffect(() => {
     async function fetchData() 

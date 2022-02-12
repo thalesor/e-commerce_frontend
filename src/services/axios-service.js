@@ -2,6 +2,14 @@ import axios from "axios";
 
 const Base_URL = "http://localhost:5000";
 
+function createConfig(token) {
+	return {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+}
+
 // USERS
 async function postBook(data) {
 	const requisitionObj = await axios.post(`${Base_URL}/book`, data);
@@ -15,18 +23,16 @@ async function getBooks() {
 
 async function getBook(title) {
 	const requisitionObj = await axios.get(`${Base_URL}/book`, {
-        headers: {
-            title: title
-          }
-    });
+		headers: {
+			title: title,
+		},
+	});
 	return requisitionObj;
 }
 
-
-async function getCategories() 
-{
-    const requisitionObj = await axios.get(`${Base_URL}/categories`);
-    return requisitionObj;
+async function getCategories() {
+	const requisitionObj = await axios.get(`${Base_URL}/categories`);
+	return requisitionObj;
 }
 
 async function signUp(data) {
@@ -40,14 +46,32 @@ async function signUp(data) {
 }
 
 async function signIn(data) {
-	try {
-		const promesa = await axios.post(`${Base_URL}/signIn`, data);
-		const token = promesa.data;
-		return token;
-	} catch (error) {
-		console.log(error);
-		return error;
-	}
+	const promesa = await axios.post(`${Base_URL}/signIn`, data);
+	const token = promesa.data;
+	console.log("token: " + token);
+	return token;
 }
 
-export { postBook, signUp, getCategories, getBook, getBooks, signIn };
+async function finalizarCompra(token, data) {
+	const config = createConfig(token);
+
+	await axios.post(`${Base_URL}/registrarCompra`, data, config);
+}
+
+async function logout(data) {
+	const config = createConfig(data);
+
+	const user = await axios.post(`${Base_URL}/logout`, null, config);
+	return user;
+}
+
+export {
+	postBook,
+	signUp,
+	getCategories,
+	getBook,
+	getBooks,
+	signIn,
+	finalizarCompra,
+	logout,
+};

@@ -8,11 +8,9 @@ async function postBook(data) {
 	return requisitionObj;
 }
 
-
-async function getCategories() 
-{
-    const requisitionObj = await axios.get(`${Base_URL}/categories`);
-    return requisitionObj;
+async function getCategories() {
+	const requisitionObj = await axios.get(`${Base_URL}/categories`);
+	return requisitionObj;
 }
 
 async function signUp(data) {
@@ -25,4 +23,15 @@ async function signUp(data) {
 	}
 }
 
-export { postBook, signUp, getCategories };
+async function signIn(data) {
+	try {
+		const promesa = await axios.post(`${Base_URL}/signIn`, data);
+		const token = promesa.data;
+		return token;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
+}
+
+export { postBook, signUp, getCategories, signIn };

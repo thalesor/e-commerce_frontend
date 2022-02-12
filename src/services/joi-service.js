@@ -18,7 +18,6 @@ function validateBook(data)
         return {
             hasErrors: true,
             errors: validation.error.details.map(err => `*${err.message} 
-            
             `)
         }
     }

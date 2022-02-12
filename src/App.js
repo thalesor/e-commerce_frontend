@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageCadastro from "./Pages/PageCadastro/cadastro-index";
 import { AppContainer } from '././Pages/ShareComponents';
 import BookRegister from '././Pages/BookRegister/Index';
+import Product from '././Pages/Product/Index';
+import Store from '././Pages/Store/Index';
 import Context from "./contexts/AppContext";
 import Swal from 'sweetalert2';
 
 export default function App() {
 	const [userData, setUserData] = useState(localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : null);
-
+  const [carrinho, setCarrinho] = useState([]);
 
   const message = Swal.mixin({
     buttonsStyling: true
@@ -25,6 +27,17 @@ export default function App() {
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
   });
+
+  const addCarrinho = (book) =>
+  {
+    setCarrinho([...carrinho, book]);
+    displayToast('success', ` ${book.title} foi adicionado ao carrinho 🚀`);
+    ;
+  }
+
+  useEffect(() => {
+    console.log(carrinho);
+  }, [carrinho]);
 
   const displayToast = (type, title) =>
   {
@@ -69,10 +82,12 @@ export default function App() {
 
 		return (
 			<AppContainer>
-			  <Context.Provider value={{userData, setUserData, displayMessage, displayToast}}>
+			  <Context.Provider value={{userData, setUserData, displayMessage, displayToast, addCarrinho}}>
 			<BrowserRouter>
 			  <Routes>
-			  <Route path="/" element={<PageCadastro />} />
+        <Route path="/" element={<Store />} />
+        <Route path="/produtos/:titulo_produto" element={<Product />} />
+			  <Route path="/cadastro" element={<PageCadastro />} />
 			  <Route path="/book-register" element={
 			  <BookRegister />
 			  }></Route> 

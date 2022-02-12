@@ -6,10 +6,8 @@ const AppContainer = style.div`
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: 30px;
-    justify-content: center;
-    align-items: center;
+    overflow-x: hidden;
 `;
 
 const Container = style.div`
@@ -101,8 +99,6 @@ const LinkTag = style(Link)`
 
 const Legend = style.h1`
     text-align: center;
-    display: block:
-    width: 100%;
     font-family: "Poppins", sans-serif;
     color: #201f1f;
     font-weight: 500;

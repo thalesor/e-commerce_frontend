@@ -1,18 +1,23 @@
 import joi from "joi";
+import {messages} from 'joi-translation-pt-br';
 
 const cadastroSchema = joi.object({
-	email: joi.string().required(),
-	password: joi.string().required(),
+	email: joi.string().required().label('e-mail'),
+	password: joi.string().required().label('senha'),
 });
 
 export default function validationDadosLogin(obj) {
-	const validation = cadastroSchema.validate(obj, { abortEarly: false });
+	const validation = cadastroSchema.validate(obj,  { messages, abortEarly: false });
 
 	if (validation.error) {
-		const messageErro = validation.error.details.map((m) => m.message);
-		console.log(messageErro);
-		return false;
+		return {
+            hasErrors: true,
+            errors: validation.error.details.map(err => `*${err.message} 
+            `)
+        }
 	}
 
-	return true;
+	return {
+		hasErrors: false
+	}
 }

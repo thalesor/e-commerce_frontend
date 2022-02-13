@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import Menu from "../Menu/Index";
 import Context from "../../contexts/AppContext";
-import { Centralise, Img, Table, TotalStyled } from "./styles.js";
+import { Centralise, Img, Table, TotalStyled, EmptyContainer } from "./styles.js";
 import { finalizarCompra } from "../../services/axios-service";
 import { useNavigate } from "react-router-dom";
-
+import  empty from './cart-empty.png';
 export default function PageCarrinho() {
 	const { token, carrinho, setCarrinho } = useContext(Context);
 	const navegate = useNavigate();
@@ -68,11 +68,21 @@ export default function PageCarrinho() {
 	return (
 		<>
 			<Menu />
+			
 			<Centralise>
+				{carrinho.length > 0 ?
+				<>
 				<h2> Seu Carrinho:</h2>
 				<Carrinho />
 				<Total />
+				</>
+				:
+				<EmptyContainer>
+					<img src={empty}/>
+				</EmptyContainer>
+			}
 			</Centralise>
+			
 		</>
 	);
 }

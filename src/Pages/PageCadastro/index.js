@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
 	ConteinerStyled,
 	SectionStyled,
 	FormStyled,
 } from "../../components/formComponents";
+import Context from "../../contexts/AppContext";
 import validationDadosCadastrados from "./validation";
+import { FormButton } from '../ShareComponents';
 import { signUp } from "../../services/axios-service";
 
 export default function PageCadastro() {
@@ -15,7 +17,7 @@ export default function PageCadastro() {
 		password: "",
 		confirmPassword: "",
 	});
-
+	const { displayMessage, displayToast } = useContext(Context);
 	const navegate = useNavigate();
 
 	function handlerInput(e) {
@@ -27,8 +29,8 @@ export default function PageCadastro() {
 
 		const valid = validationDadosCadastrados(formData);
 
-		if (!valid) {
-			alert("erro nos dados de cadastro");
+		if (valid.hasErrors) {
+			displayMessage("error", "Falha", valid.errors);
 			return;
 		}
 
@@ -41,21 +43,19 @@ export default function PageCadastro() {
 		try {
 			const promessa = await signUp(user);
 			console.log(promessa);
-			alert(`O usuário foi cadastrado 🥰`);
+			displayToast("success", `Você foi cadastrado 🥰`);
 			navegate("/login");
 		} catch (error) {
-			console.log(error);
-			alert("Erro, tente novamente");
+			displayMessage("error", "Falha", error);
 		}
 	}
 
 	return (
 		<ConteinerStyled>
-			<nav>Login</nav>
 			<SectionStyled>
-				<h2>Signup From Here</h2>
+				<h2>Registro</h2>
 				<FormStyled onSubmit={hadlerSubmit}>
-					<label>Username</label>
+					<label>O seu nome</label>
 					<input
 						type="text"
 						name="user"
@@ -63,7 +63,7 @@ export default function PageCadastro() {
 						placeholder="Enter Username"
 						onChange={(e) => handlerInput(e)}
 					></input>
-					<label>Email Address</label>
+					<label>Seu endereço de e-mail</label>
 					<input
 						type="email"
 						placeholder="Email address..."
@@ -71,7 +71,7 @@ export default function PageCadastro() {
 						value={formData.email}
 						onChange={(e) => handlerInput(e)}
 					></input>
-					<label>Password</label>
+					<label>Sua senha</label>
 					<input
 						type="password"
 						placeholder="Enter password"
@@ -79,7 +79,7 @@ export default function PageCadastro() {
 						value={formData.password}
 						onChange={(e) => handlerInput(e)}
 					></input>
-					<label>Confirm Password</label>
+					<label>Repita a sua senha</label>
 					<input
 						type="password"
 						placeholder="Confirm password"
@@ -87,7 +87,7 @@ export default function PageCadastro() {
 						value={formData.confirmPassword}
 						onChange={(e) => handlerInput(e)}
 					></input>
-					<button type="submit">Register Now</button>
+					<FormButton type="submit">Registre-se agora</FormButton>
 				</FormStyled>
 			</SectionStyled>
 		</ConteinerStyled>

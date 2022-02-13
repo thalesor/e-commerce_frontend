@@ -4,23 +4,18 @@ import {
 	AiOutlineLogout as Sair,
 } from "react-icons/ai";
 import { MenuStyled, CarrinhoContainer, Badge } from './Style';
-import Context, { useAuth } from "../../contexts/AppContext";
+import Context from "../../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Menu() {
-	const { carrinho } = useContext(Context);
-	const {deslogar} = useAuth();
+	const { carrinho, deslogar } = useContext(Context);
 	const navegate = useNavigate()
 
-	function logout(){
-		deslogar();
-		navegate("/login");
-	}
 
 	return (
 		<MenuStyled>
-			<Sair onClick={()=> logout()}/>
+			<Sair onClick={()=> deslogar()}/>
 			<h1>Minha loja</h1>
 			<Link to={`/carrinho`}>
 				<CarrinhoContainer>

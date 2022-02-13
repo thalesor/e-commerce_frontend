@@ -12,15 +12,14 @@ const Store = () =>
     const [books, setBooks] = useState(null);
     const { token, deslogar, userData, displayMessage, displayToast } = useContext(Context);
     const navegate = useNavigate();
-
+    
     useEffect(()=> {
         if(!token || token.length===0){
-          deslogar();
           navegate("/login")
         }
     },[token])
     
-    useLayoutEffect(() => {
+    useEffect(() => {
     async function fetchData() 
     {
         try 

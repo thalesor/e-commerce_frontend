@@ -10,7 +10,6 @@ function createConfig(token) {
 	};
 }
 
-// USERS
 async function postBook(data) {
 	const requisitionObj = await axios.post(`${Base_URL}/book`, data);
 	return requisitionObj;
@@ -49,17 +48,24 @@ async function signIn(data) {
 	return promesa;
 }
 
+async function logout(data) {
+	const config = createConfig(data);
+
+	const user = await axios.post(`${Base_URL}/logout`, null, config);
+	return user;
+}
+
 async function finalizarCompra(token, data) {
 	const config = createConfig(token);
 
 	await axios.post(`${Base_URL}/registrarCompra`, data, config);
 }
 
-async function logout(data) {
-	const config = createConfig(data);
+async function getCompras(token) {
+	const config = createConfig(token);
 
-	const user = await axios.post(`${Base_URL}/logout`, null, config);
-	return user;
+	const resposta = await axios.get(`${Base_URL}/getCompras`, config);
+	return resposta.data;
 }
 
 export {
@@ -71,4 +77,5 @@ export {
 	signIn,
 	finalizarCompra,
 	logout,
+	getCompras,
 };

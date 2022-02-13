@@ -1,10 +1,16 @@
 import React, { useState, useContext } from "react";
 import Menu from "../Menu/Index";
 import Context from "../../contexts/AppContext";
-import { Centralise, Img, Table, TotalStyled, EmptyContainer } from "./styles.js";
-import { finalizarCompra } from "../../services/axios-service";
+import {
+	Centralise,
+	Img,
+	Table,
+	TotalStyled,
+	EmptyContainer,
+} from "./styles.js";
+import { finalizarCompra, getCompras } from "../../services/axios-service";
 import { useNavigate } from "react-router-dom";
-import  empty from './cart-empty.png';
+import empty from "./cart-empty.png";
 export default function PageCarrinho() {
 	const { token, carrinho, setCarrinho } = useContext(Context);
 	const navegate = useNavigate();
@@ -44,16 +50,17 @@ export default function PageCarrinho() {
 
 	function Total() {
 		let soma = 0;
-		const compras = { ...carrinho };
+		const compras = [...carrinho];
 		for (let i = 0; i < carrinho.length; i++) {
 			soma += carrinho[i].value;
 			delete compras[i].category;
 			delete compras[i].views;
 			delete compras[i].in_stock;
+			delete compras[i].description;
 		}
 
 		const somaFinal = soma.toFixed(2);
-		const comprasCompletas = { ...compras, valorTotal: somaFinal };
+		const comprasCompletas = { produtos: compras, valorTotal: somaFinal };
 
 		return (
 			<TotalStyled>
@@ -68,21 +75,20 @@ export default function PageCarrinho() {
 	return (
 		<>
 			<Menu />
-			
+
 			<Centralise>
-				{carrinho.length > 0 ?
-				<>
-				<h2> Seu Carrinho:</h2>
-				<Carrinho />
-				<Total />
-				</>
-				:
-				<EmptyContainer>
-					<img src={empty}/>
-				</EmptyContainer>
-			}
+				{carrinho.length > 0 ? (
+					<>
+						<h2> Seu Carrinho:</h2>
+						<Carrinho />
+						<Total />
+					</>
+				) : (
+					<EmptyContainer>
+						<img src={empty} />
+					</EmptyContainer>
+				)}
 			</Centralise>
-			
 		</>
 	);
 }

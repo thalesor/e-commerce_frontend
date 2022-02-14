@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Base_URL = "https://back-library.herokuapp.com/";
+const Base_URL = "https://back-library.herokuapp.com";
 
 function createConfig(token) {
 	return {

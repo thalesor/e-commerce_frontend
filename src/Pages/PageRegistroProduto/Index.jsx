@@ -117,7 +117,7 @@ const BookRegister = () =>
         <Input type="number" autoComplete='false' placeholder="Quanto custa esse livro" onChange={onInputChange} value={formData.value} disabled={isFormActive ? false : true} name='value'></Input>
         <Label>Quantidade em estoque:</Label>
         <Input type="number" autoComplete='false' placeholder="Qual a quantidade em estoque" onChange={onInputChange} value={formData.in_stock} disabled={isFormActive ? false : true} name='in_stock'></Input>
-        <FormButton type="submit" onClick={()=> displayToast('success', 'O livro foi cadastrado 🥰')} disabled={isFormActive ? false : true}>
+        <FormButton type="submit" disabled={isFormActive ? false : true}>
         {isFormActive 
         ? 'Cadastrar' 
         :

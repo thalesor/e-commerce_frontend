@@ -36,9 +36,7 @@ const Product = () =>
         {bookData &&
         <>
             <Legend>Informações do livro</Legend>
-            <BookBox>
-                <img src={bookData.imageUrl}></img>
-            </BookBox>
+            <BookBox cover={bookData.imageUrl}/>
             <Title>{bookData.title}</Title>
             <Price>R$ {bookData.value}</Price>
             <Span>{bookData.description}</Span>

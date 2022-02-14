@@ -7,7 +7,7 @@ import {
 } from "../../components/formComponents";
 import Context from "../../contexts/AppContext";
 import validationDadosCadastrados from "./validation";
-import { FormButton } from '../ShareComponents';
+import { FormButton } from "../ShareComponents";
 import { signUp } from "../../services/axios-service";
 
 export default function PageCadastro() {

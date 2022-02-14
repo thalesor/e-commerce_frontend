@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BookRegister from "././Pages/BookRegister/Index";
 import Product from "././Pages/Product/Index";
 import Store from "././Pages/Store/Index";
@@ -9,6 +9,7 @@ import PageCadastro from "./Pages/PageCadastro/index";
 import PageLogin from "./Pages/PageLogin";
 import PageCarrinho from "./Pages/PageCarrinho";
 import { logout } from "./services/axios-service";
+import PageHistorioCompras from "./Pages/PageHistórico";
 
 export default function App() {
 	const persistedToken = JSON.parse(localStorage.getItem("token"));
@@ -23,10 +24,8 @@ export default function App() {
 		try {
 			const permit = await logout(token);
 			localStorage.clear();
-			window.location.replace('/login');
-		}
-		catch(error)
-		{
+			window.location.replace("/login");
+		} catch (error) {
 			displayMessage("error", "Falha", "Houve um erro ao tentar deslogar");
 		}
 	}
@@ -127,6 +126,7 @@ export default function App() {
 					<Route path="/carrinho" element={<PageCarrinho />} />
 					<Route path="/login" element={<PageLogin />} />
 					<Route path="/registrar-usuario" element={<PageCadastro />} />
+					<Route path="/historico-de-Compras" element={<PageHistorioCompras />} />
 				</Routes>
 			</BrowserRouter>
 		</Context.Provider>

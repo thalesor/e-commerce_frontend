@@ -32,6 +32,7 @@ export const Img = styled.img`
 export const Table = styled.table`
 	width: 100%;
 	margin-bottom: 20px;
+	align-self: flex-start;
 
 	td,
 	th {
@@ -39,7 +40,6 @@ export const Table = styled.table`
 	}
 
 	td {
-		padding: 12px 0;
 		text-align: center;
 	}
 
@@ -68,6 +68,11 @@ export const TotalStyled = styled.section`
 		background: #fff;
 		border: 1px solid black;
 	}
+`;
+
+export const Span = styled.div`
+	font-size: 14px;
+	color: red;
 `;
 
 export const EmptyContainer = styled.div`

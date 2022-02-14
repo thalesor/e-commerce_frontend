@@ -2,10 +2,7 @@ import Menu from "../Menu/Index";
 
 import {
 	Centralise,
-	//Img,
-	Table,
-	//TotalStyled,
-	//EmptyContainer,
+	Table
 } from "../../components/tableComponents";
 import { getCompras } from "../../services/axios-service";
 import { useAuth } from "../../contexts/AppContext";
@@ -46,10 +43,10 @@ function MinhasCompras({ compras }) {
 			<Table>
 				<thead>
 					<tr>
-						<td>Day</td>
-						<td>Products</td>
-						<td>Price por Unidade</td>
-						<td>Price Total</td>
+						<td>Data</td>
+						<td>Livros</td>
+						<td>Preço por unidade</td>
+						<td>Preço total</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,10 +60,10 @@ function MinhasCompras({ compras }) {
 							</td>
 							<td>
 								{compra.produtos.map((p) => (
-									<p key={p._id}>{p.value}</p>
+									<p key={p._id}>{p.value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</p>
 								))}
 							</td>
-							<td>{compra.valorTotal}</td>
+							<td>{compra.valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
 						</tr>
 					))}
 				</tbody>

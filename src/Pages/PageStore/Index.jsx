@@ -1,8 +1,8 @@
-import React, { useState, useLayoutEffect, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { getCategories, getBooks } from '../../services/axios-service';
-import {  Legend, AppContainer } from '../ShareComponents';
+import {  Legend, AppContainer, FormButton } from '../ShareComponents';
 import Menu from "../Menu/Index";
 import { Row, BookBox, PriceTag} from './Style';
 
@@ -10,7 +10,7 @@ const Store = () =>
 {
     const [categories, setCategories] = useState(null);
     const [books, setBooks] = useState(null);
-    const { token, deslogar, userData, displayMessage, displayToast } = useContext(Context);
+    const { token } = useContext(Context);
     const navegate = useNavigate();
     
     useEffect(()=> {
@@ -44,6 +44,11 @@ const Store = () =>
     return <>
     <Menu/>
     <AppContainer>
+    <FormButton onClick={()=> {
+        navegate("/book-register")
+    }}>
+        Cadastrar livro
+    </FormButton>
         { categories ?
         (
             categories.map((cat) => 
@@ -61,7 +66,7 @@ const Store = () =>
                                         <>
                                         <Link key={i} to={decodeURI(`/produtos/${book.title}`)}>
                                         <BookBox cover={book.imageUrl}>
-                                            <PriceTag>{book.value}</PriceTag>
+                                            <PriceTag>{book.value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</PriceTag>
                                         </BookBox>
                                         </Link>
                                         </>

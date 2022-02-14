@@ -1,15 +1,11 @@
 import styled from "styled-components";
 
-const MenuStyled = styled.nav`
+const MenuContainer = styled.div`
 	width: 100%;
-	height: 10vh;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 16px;
-
-	background: #dddddd;
-
 	svg {
 		width: 40px;
 		height: 30px;
@@ -19,6 +15,15 @@ const MenuStyled = styled.nav`
 		font-family: "Tangerine", cursive;
 		font-size: 50px;
 	}
+`;
+
+const MenuStyled = styled.nav`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	min-height: 10vh;
+	background: #dddddd;
 `;
 
 const CarrinhoContainer = styled.div`
@@ -45,4 +50,4 @@ const Badge = styled.div`
 	align-items: center;
 `;
 
-export { MenuStyled, CarrinhoContainer, Badge }
+export { MenuStyled, MenuContainer, CarrinhoContainer, Badge }

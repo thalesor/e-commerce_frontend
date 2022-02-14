@@ -74,10 +74,10 @@ const FormButton = style.button`
     line-height: 46px;
     padding: 0 42px;
     border: 2px solid #ebebeb;
-    color: #ffffff;
+    color: ${(props) => (props.disabled ? "#201f1f" : "#ffffff")};
     z-index: 1;
     font-size: 12px;
-    background-color: #201f1f;
+    background-color: ${(props) => (props.disabled ? "#bbbbbb" : "#201f1f")};
 `;
 
 const LinkTag = style(Link)`

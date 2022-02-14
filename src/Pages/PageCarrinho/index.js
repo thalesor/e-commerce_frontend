@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Menu from "../Menu/Index";
 import Context from "../../contexts/AppContext";
 import {
@@ -7,12 +7,13 @@ import {
 	Table,
 	TotalStyled,
 	EmptyContainer,
+	Span
 } from "./styles.js";
-import { finalizarCompra, getCompras } from "../../services/axios-service";
+import { finalizarCompra } from "../../services/axios-service";
 import { useNavigate } from "react-router-dom";
 import empty from "./cart-empty.png";
 export default function PageCarrinho() {
-	const { token, carrinho, setCarrinho } = useContext(Context);
+	const { token, carrinho, setCarrinho, displayMessage } = useContext(Context);
 	const navegate = useNavigate();
 
 	function Carrinho() {
@@ -20,21 +21,27 @@ export default function PageCarrinho() {
 			<Table>
 				<thead>
 					<tr>
-						<td>Images</td>
-						<td>Product</td>
-						<td>description</td>
-						<td>Price</td>
+						<td></td>
+						<td>Livro</td>
+						<td>Preço</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					{carrinho.map((b) => (
-						<tr key={b._id}>
+					{carrinho.map((b, i) => (
+						<tr key={i}>
 							<td>
 								<Img src={b.imageUrl} alt="erro" />
 							</td>
 							<td>{b.title}</td>
-							<td>{b.description}</td>
-							<td>{b.value}</td>
+							<td>{b.value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
+							<td><Span onClick={()=> displayMessage(
+								'warning',
+								'Aviso',
+								`Tem certeza que deseja remover ${b.title} do carrinho?`,
+								() => removeItemCarrinho(b),
+								true
+							)}>Remover</Span></td>
 						</tr>
 					))}
 				</tbody>
@@ -42,10 +49,27 @@ export default function PageCarrinho() {
 		);
 	}
 
+	function removeItemCarrinho(object)
+	{
+		const newCarrinho = carrinho.filter(b => b !== object); 
+		setCarrinho([...newCarrinho]);
+	}
+
 	async function fecharCompra(dado) {
-		await finalizarCompra(token, dado);
-		setCarrinho([]);
-		navegate("/");
+		try{
+			await finalizarCompra(token, dado);
+
+			const jesus = <><Carrinho />
+			<Total /></>;
+			
+			setCarrinho([]);
+			displayMessage("success", "Tudo certo", "Obrigado por comprar conosco 🤩");
+			navegate("/");
+		}
+		catch(error)
+		{
+			displayMessage("error", "Falha", error.response.data);
+		}
 	}
 
 	function Total() {
@@ -59,12 +83,11 @@ export default function PageCarrinho() {
 			delete compras[i].description;
 		}
 
-		const somaFinal = soma.toFixed(2);
-		const comprasCompletas = { produtos: compras, valorTotal: somaFinal };
+		const comprasCompletas = { produtos: compras, valorTotal: soma };
 
 		return (
 			<TotalStyled>
-				<h3>Total: {somaFinal}</h3>
+				<h3>Total: {soma.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h3>
 				<button onClick={() => fecharCompra(comprasCompletas)}>
 					Finalizar Compra
 				</button>

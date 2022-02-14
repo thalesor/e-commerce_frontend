@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { getBook } from '../../services/axios-service';
 import {  Legend, FormButton } from '../ShareComponents';
@@ -38,14 +38,14 @@ const Product = () =>
             <Legend>Informações do livro</Legend>
             <BookBox cover={bookData.imageUrl}/>
             <Title>{bookData.title}</Title>
-            <Price>R$ {bookData.value}</Price>
+            <Price>{bookData.value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</Price>
             <Span>{bookData.description}</Span>
-            <Span>Em estoque: {bookData.in_stock}</Span>
-            <FormButton  onClick={()=> {
+            {bookData.in_stock > 0 ? <Span>Em estoque: {bookData.in_stock}</Span> : <Span red>Estoque esgotado!</Span>}
+            <FormButton disabled={bookData.in_stock > 0 ? false : true}  onClick={()=> {
                 addCarrinho({...bookData})
                 navegate("/")
             }}>
-                +Add. ao carrinho
+                {bookData.in_stock > 0 ? '+Add. ao carrinho' : 'Indisponível'}
             </FormButton>
         </>
         }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BookRegister from "././Pages/BookRegister/Index";
-import Product from "././Pages/Product/Index";
-import Store from "././Pages/Store/Index";
+import BookRegister from "./Pages/PageRegistroProduto/Index";
+import Product from "./Pages/PageProduto/Index";
+import Store from "./Pages/PageStore/Index";
 import Context from "./contexts/AppContext";
 import Swal from "sweetalert2";
-import PageCadastro from "./Pages/PageCadastro/index";
+import PageCadastro from "./Pages/PageCadastroUsuario/index";
 import PageLogin from "./Pages/PageLogin";
 import PageCarrinho from "./Pages/PageCarrinho";
 import { logout } from "./services/axios-service";
@@ -86,20 +86,15 @@ export default function App() {
 			text: text,
 			icon: type,
 			showCancelButton: showCancelButton,
-			confirmButtonText: "Ok",
+			confirmButtonText: "Sim",
 			cancelButtonText: "Não",
 			reverseButtons: true,
-		});
-
-		if (fn) {
-			message.then((result) => {
+		}).then((result) => {
 				if (result.isConfirmed) {
-					message.fire("Deleted!", "Your file has been deleted.", "success");
-				} else if (result.dismiss === Swal.DismissReason.cancel) {
-					message.fire("Cancelled", "Your imaginary file is safe :)", "error");
-				}
+					fn();
+				} 
 			});
-		}
+		
 	};
 
 	return (

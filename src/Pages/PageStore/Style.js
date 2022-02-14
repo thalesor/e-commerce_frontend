@@ -20,8 +20,8 @@ const BookBox = styled.div`
 `;
 
 const PriceTag = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   background-color: #000000;
   border-radius: 100%;
   color: #ffffff;

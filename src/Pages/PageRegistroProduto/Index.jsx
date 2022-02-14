@@ -1,16 +1,19 @@
 import React, { useState, useLayoutEffect, useContext } from 'react';
 import Loader from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 import Context from "../../contexts/AppContext";
 import { validateBook } from '../../services/joi-service';
 import { postBook, getCategories } from '../../services/axios-service';
-import { Form, Input, FormButton, Legend, Label, TextArea} from '../ShareComponents';
+import Menu from "../Menu/Index";
+import { Form, AppContainer, Input, FormButton, Legend, Label, TextArea} from '../ShareComponents';
 import { Button, Grid} from './Style';
 
 const BookRegister = () =>
 {
     const [isFormActive, setIsFormActive] = useState(true);
     const [categories, setCategories] = useState(null);
-    const { userData, displayMessage, displayToast } = useContext(Context);
+    const { displayMessage, displayToast } = useContext(Context);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         category: '',
@@ -48,8 +51,11 @@ const BookRegister = () =>
         {
            
            try{
+               formData.value = parseFloat(formData.value);
+               formData.in_stock = parseInt(formData.in_stock);
                 await postBook(formData);
-                displayMessage('success', 'Tudo certo', 'O livro foi cadastrado 🥰');
+                displayToast('success', 'O livro foi cadastrado 🥰');
+                navigate('/');
            }
            catch(err)
            {
@@ -78,6 +84,8 @@ const BookRegister = () =>
     }
 
     return <>
+        <Menu/>
+        <AppContainer>
         <Legend>Cadastro de livros:</Legend>
       <Form onSubmit={onPostBook}>
         <Label>Título:</Label>
@@ -117,6 +125,7 @@ const BookRegister = () =>
         }
         </FormButton>
       </Form>
+      </AppContainer>
     </>
 }
 

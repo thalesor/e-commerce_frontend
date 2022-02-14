@@ -39,9 +39,11 @@ const Price = styled.span`
 const Span = styled.span`
   font-size: 14px;
   line-height: 24px;
-  color: #606060;
+  color: ${(props) => (props.red ? "red" : "#606060")};
   margin-bottom: 0;
 `
+
+
 
 
 

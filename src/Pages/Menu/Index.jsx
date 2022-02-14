@@ -1,25 +1,29 @@
-import React, { useState, useLayoutEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
 	AiOutlineShoppingCart as Carrinho,
-	AiOutlineLogout as Sair,
-	AiOutlineUser as User
+	AiOutlineDollar as Purchase
 } from "react-icons/ai";
-import { MenuStyled, CarrinhoContainer, Badge } from './Style';
+
+import { IoExitOutline  as Sair } from "react-icons/io5";
+import { MenuStyled, MenuContainer, CarrinhoContainer, Badge } from './Style';
 import Context from "../../contexts/AppContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { FormButton } from '../ShareComponents';
 
 
 export default function Menu() {
-	const { carrinho, deslogar } = useContext(Context);
-	const navegate = useNavigate()
+	const { carrinho, deslogar, displayMessage } = useContext(Context);
+	const navegate = useNavigate();
+    const location = useLocation();
 
 	return (
 		<MenuStyled>
+			<MenuContainer>
 			<div>
-			<User onClick={() => navegate("/historico-de-compras")}></User>
+			<Purchase onClick={() => navegate("/historico-de-compras")}></Purchase>
 			<Sair onClick={()=> deslogar()}/>
 			</div>
-			<h1>Minha loja</h1>
+			<h1>Livraria</h1>
 			<Link to={`/carrinho`}>
 				<CarrinhoContainer>
 					<Carrinho />
@@ -30,6 +34,8 @@ export default function Menu() {
 						}
 				</CarrinhoContainer>
 			</Link>
+			</MenuContainer>
+			{location.pathname !== '/' ? <FormButton onClick={()=> navegate(-1)}>Voltar</FormButton> : ''}
 		</MenuStyled>
 	);
 }

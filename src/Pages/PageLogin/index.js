@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../services/axios-service";
 import {
@@ -6,14 +6,16 @@ import {
 	SectionStyled,
 	FormStyled,
 } from "../../components/formComponents";
-import { useAuth } from "../../contexts/AppContext";
+import Context, { useAuth } from "../../contexts/AppContext";
 import validationDadosLogin from "./validation";
+import {  FormButton } from '../ShareComponents';
 
 export default function PageLogin() {
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
+	const { displayMessage, displayToast } = useContext(Context);
 	const { manterLogin } = useAuth();
 
 	const navegate = useNavigate();
@@ -29,27 +31,28 @@ export default function PageLogin() {
 
 		const valid = validationDadosLogin(user);
 
-		if (!valid) {
-			alert("erro nos dados de cadastro");
+		if (valid.hasErrors) {
+			displayMessage("error", "Falha", valid.errors);
 			return;
 		}
 
 		try {
-			const token = await signIn(user);
-			manterLogin(token);
+			const returned = await signIn(user);
+			manterLogin(returned.data.token);
+			displayToast("success", `Seja bem-vindo ${returned.data.user}`);
+
 			navegate("/");
 		} catch (error) {
-			console.log(error);
-			alert("Erro, tente novamente");
+			displayMessage("error", "Falha", error.response.data);
 		}
 	}
 
 	return (
 		<ConteinerStyled>
 			<SectionStyled>
-				<h2>Signup From Here</h2>
+				<h2>Faça o login</h2>
 				<FormStyled onSubmit={hadlerSubmit}>
-					<label>Email Address</label>
+					<label>Endereço de e-mail</label>
 					<input
 						type="email"
 						placeholder="Email address..."
@@ -57,7 +60,7 @@ export default function PageLogin() {
 						value={formData.email}
 						onChange={(e) => handlerInput(e)}
 					/>
-					<label>Password</label>
+					<label>Senha</label>
 					<input
 						type="password"
 						placeholder="Enter password"
@@ -65,12 +68,12 @@ export default function PageLogin() {
 						value={formData.password}
 						onChange={(e) => handlerInput(e)}
 					/>
-					<button type="submit">Login</button>
+					<FormButton type="submit">Login</FormButton>
 					<hr />
 					<label>Não possui uma conta?</label>
-					<button trpe="text" onClick={() => navegate("/sign-up")}>
-						Register Now
-					</button>
+					<FormButton trpe="text" onClick={() => navegate("/registrar-usuario")}>
+						registre-se agora
+					</FormButton>
 				</FormStyled>
 			</SectionStyled>
 		</ConteinerStyled>

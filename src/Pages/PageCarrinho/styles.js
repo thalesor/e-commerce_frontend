@@ -69,3 +69,19 @@ export const TotalStyled = styled.section`
 		border: 1px solid black;
 	}
 `;
+
+export const EmptyContainer = styled.div`
+	background-color: #eeeeee;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 30px;
+
+	img {
+		height: 250px;
+		width: 250px;s
+	}
+`;

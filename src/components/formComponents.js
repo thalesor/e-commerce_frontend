@@ -1,20 +1,18 @@
 import styled from "styled-components";
 
 export const ConteinerStyled = styled.main`
-	height: 100%;
-	width: 100vw;
+	height: 100vh;
+	width: 100%;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
-	padding: 16px;
+	padding-inline: 16px;
 `;
 
 export const SectionStyled = styled.section`
 	border: 3px solid #6c757d;
-	width: 420px;
 	padding: 22px;
 
 	h2 {
@@ -33,7 +31,7 @@ export const SectionStyled = styled.section`
 		text-align: center;
 
 		::after {
-			content: "or";
+			content: "ou";
 			display: inline-block;
 			position: relative;
 			top: -0.9em;
@@ -59,14 +57,10 @@ export const FormStyled = styled.form`
 	button {
 		width: 100%;
 		height: 52px;
-
 		text-align: center;
 		font-size: 16px;
-		color: black;
 		font-weight: 700;
-
 		margin-top: 30px;
-		background: none;
 		border: 1px solid #6c757d;
 	}
 `;

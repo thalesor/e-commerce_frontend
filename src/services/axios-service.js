@@ -40,16 +40,13 @@ async function signUp(data) {
 		const retorno = await axios.post(`${Base_URL}/signUp`, data);
 		return retorno;
 	} catch (error) {
-		console.log(error);
 		return error;
 	}
 }
 
 async function signIn(data) {
 	const promesa = await axios.post(`${Base_URL}/signIn`, data);
-	const token = promesa.data;
-	console.log("token: " + token);
-	return token;
+	return promesa;
 }
 
 async function finalizarCompra(token, data) {

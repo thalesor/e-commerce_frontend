@@ -53,16 +53,16 @@ function MinhasCompras({ compras }) {
 					</tr>
 				</thead>
 				<tbody>
-					{compras.map((compra) => (
+					{compras?.map((compra) => (
 						<tr key={compra._id}>
 							<td>{compra.data}</td>
 							<td>
-								{compra.produtos.map((p) => (
+								{compra.produtos?.map((p) => (
 									<p key={p._id}>{p.title}</p>
 								))}
 							</td>
 							<td>
-								{compra.produtos.map((p) => (
+								{compra.produtos?.map((p) => (
 									<p key={p._id}>{p.value}</p>
 								))}
 							</td>

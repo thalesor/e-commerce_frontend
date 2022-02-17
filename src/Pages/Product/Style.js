@@ -14,16 +14,12 @@ const ProductContainer = styled.div`
 const BookBox = styled.div`
   width: 340px;
   height: 439.55px;
-  border: 1px solid gray;
   border-radius: 5px;
-  position: relative;
-  align-self: center;
-
-  img {
-    border-radius: inherit;
-    width: 100%;
-    height: 100%;
-  }
+  background: url(${(props) => props.cover}) no-repeat center center; 
+  -webkit-background-size: fill;
+  -moz-background-size: fill;
+  -o-background-size: fill;
+  background-size: fill;
 `;
 
 const Title = styled.h4`

@@ -60,8 +60,7 @@ const Store = () =>
                                     return (
                                         <>
                                         <Link key={i} to={decodeURI(`/produtos/${book.title}`)}>
-                                        <BookBox>
-                                            <img src={book.imageUrl}></img>
+                                        <BookBox cover={book.imageUrl}>
                                             <PriceTag>{book.value}</PriceTag>
                                         </BookBox>
                                         </Link>

@@ -3,13 +3,12 @@ import styled from "styled-components";
 const MenuStyled = styled.nav`
 	width: 100%;
 	height: 10vh;
-
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 16px;
 
-	background: #bbbbbb;
+	background: #dddddd;
 
 	svg {
 		width: 40px;
